@@ -5,12 +5,6 @@ const { spawn } = require("child_process");
 let API_KEY = null; // Will be recived from user
 
 /**
- * @typedef {Object} CreateReco
- * @property {string} name how the person is called
- * @property {number} age how many years the person lived
- */
-
-/**
  * Creates DNS record by sending POST request with
  * DigitalOcean access token.
  * {@link @link https://docs.digitalocean.com/reference/api/api-reference/#operation/create_domain_record API}.
