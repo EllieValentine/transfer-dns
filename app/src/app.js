@@ -5,8 +5,19 @@ const { spawn } = require("child_process");
 let API_KEY = null; // Will be recived from user
 
 /**
+ * @typedef {Object} CreateReco
+ * @property {string} name how the person is called
+ * @property {number} age how many years the person lived
+ */
+
+/**
  * Creates DNS record by sending POST request with
  * DigitalOcean access token.
+ * {@link @link https://docs.digitalocean.com/reference/api/api-reference/#operation/create_domain_record API}.
+ *
+ * @param {object} obj
+ * @param {string} obj.domain - Domain.
+ * @param {object} obj.data - Payload.
  */
 const createRecord = async ({ domain, data }) => {
   return await axios.post(
@@ -22,6 +33,8 @@ const createRecord = async ({ domain, data }) => {
 
 /**
  * Prints message to console.
+ * @param {string} message - Message needs to show user.
+ * @return {void}
  */
 const print = (message) => console.log(">>\x1b[36m", message, "\x1b[0m");
 
@@ -29,6 +42,8 @@ const print = (message) => console.log(">>\x1b[36m", message, "\x1b[0m");
  * Validates and fixing TTL if needed.
  * DNS TTL (time to live) is a setting that tells the DNS resolver
  * how long to cache a query before requesting a new one.
+ * @param {string} ttl - TTL record value.
+ * @return {Number} Validated TTL value.
  */
 const fixTTL = (ttl) => {
   if (Number(ttl) < 30) {
@@ -40,6 +55,8 @@ const fixTTL = (ttl) => {
 
 /**
  * Receives input from user.
+ * @param {string} message - Question to user.
+ * @return {Promise<string>} - User response.
  */
 const question = (message) =>
   new Promise((resolve) => {
@@ -56,6 +73,7 @@ const question = (message) =>
 
 /**
  * The main code of the app.
+ * @return {Promise<void>}
  */
 const app = async () => {
   let shellOutput = "";
@@ -64,6 +82,8 @@ const app = async () => {
   let totalRecords = 0;
   let totalValidRecords = 0;
   let totalNotValidRecords = 0;
+
+  allRecords = { name2 };
 
   console.log("\nWelcome to the utility for transferring DNS records!\n");
   const DOMAIN = await question("Type domain");
